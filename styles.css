@@ -1,0 +1,305 @@
+:root {
+  --bg: #0e0d0b;
+  --bg-2: #161412;
+  --ink: #f0ece4;
+  --ink-dim: #8b857a;
+  --accent: #ff5e3a;
+  --accent-2: #ffd66b;
+  --line: #2a2723;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 15px;
+  line-height: 1.55;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* film grain overlay */
+.grain {
+  position: fixed; inset: 0;
+  pointer-events: none;
+  z-index: 999;
+  opacity: .06;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  mix-blend-mode: overlay;
+}
+
+/* ── Topbar ─────────────────────────────────────────────── */
+.topbar {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 22px 36px;
+  border-bottom: 1px solid var(--line);
+  position: sticky; top: 0;
+  background: rgba(14,13,11,.85);
+  backdrop-filter: blur(6px);
+  z-index: 10;
+}
+.brand { display: flex; align-items: baseline; gap: 10px; }
+.logo-mark { font-size: 22px; color: var(--accent); }
+.logo-text {
+  font-family: "Major Mono Display", monospace;
+  font-size: 18px;
+  letter-spacing: 1px;
+}
+.specs {
+  font-size: 12px; letter-spacing: 1px;
+  color: var(--ink-dim); text-transform: uppercase;
+}
+.specs b { color: var(--ink); }
+.specs .dot { margin: 0 8px; color: var(--line); }
+
+/* ── Main ───────────────────────────────────────────────── */
+main {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 80px 36px 60px;
+}
+
+/* hero */
+.hero { margin-bottom: 64px; }
+.hero h1 {
+  font-family: "Fraunces", serif;
+  font-weight: 300;
+  font-size: clamp(40px, 7vw, 84px);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+}
+.hero h1 span { display: block; }
+.hero .line1 { font-weight: 900; font-style: italic; }
+.hero .line2 { font-weight: 300; color: var(--accent); }
+.hero .line3 { font-weight: 300; font-size: .42em; color: var(--ink-dim); margin-top: 18px; letter-spacing: 0; font-family: "JetBrains Mono", monospace; }
+
+.sub {
+  margin-top: 28px;
+  max-width: 60ch;
+  color: var(--ink-dim);
+  font-size: 14px;
+}
+
+/* ── Drop zone ──────────────────────────────────────────── */
+.drop {
+  position: relative;
+  margin: 40px 0;
+  padding: 60px 40px;
+  background: var(--bg-2);
+  cursor: pointer;
+  transition: background .2s ease, transform .2s ease;
+}
+.drop:hover { background: #1c1916; }
+.drop.dragover {
+  background: #1f1a14;
+  transform: scale(.998);
+}
+.drop.dragover .bracket { border-color: var(--accent); }
+
+.drop-inner {
+  position: relative;
+  text-align: center;
+  padding: 30px 20px;
+}
+.bracket {
+  position: absolute;
+  width: 22px; height: 22px;
+  border: 2px solid var(--ink);
+  transition: border-color .2s ease;
+}
+.bracket-tl { top: 0; left: 0; border-right: 0; border-bottom: 0; }
+.bracket-tr { top: 0; right: 0; border-left: 0; border-bottom: 0; }
+.bracket-bl { bottom: 0; left: 0; border-right: 0; border-top: 0; }
+.bracket-br { bottom: 0; right: 0; border-left: 0; border-top: 0; }
+
+.drop-art { color: var(--ink-dim); margin-bottom: 18px; }
+.drop-art svg { width: 160px; height: auto; }
+
+.drop-title {
+  font-family: "Fraunces", serif;
+  font-weight: 600;
+  font-style: italic;
+  font-size: 32px;
+  letter-spacing: -.01em;
+}
+.drop-or {
+  color: var(--ink-dim);
+  font-size: 12px;
+  letter-spacing: 2px;
+  margin: 14px 0;
+}
+.drop-hint {
+  margin-top: 18px;
+  font-size: 11px;
+  color: var(--ink-dim);
+  letter-spacing: 1px;
+}
+
+/* ── Buttons ────────────────────────────────────────────── */
+.btn {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  background: var(--ink);
+  color: var(--bg);
+  border: 1px solid var(--ink);
+  padding: 12px 22px;
+  cursor: pointer;
+  transition: all .15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.btn:hover {
+  background: var(--accent);
+  color: var(--bg);
+  border-color: var(--accent);
+}
+.btn-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  font-size: 14px;
+  padding: 16px 28px;
+}
+.btn-primary:hover {
+  background: var(--accent-2);
+  border-color: var(--accent-2);
+  color: var(--bg);
+}
+.btn:disabled {
+  background: var(--line);
+  border-color: var(--line);
+  color: var(--ink-dim);
+  cursor: not-allowed;
+}
+.btn-arrow { font-size: 16px; }
+.link-btn {
+  background: none; border: none;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  cursor: pointer;
+  padding: 4px 6px;
+}
+.link-btn:hover { color: var(--accent); }
+
+/* ── Queue ──────────────────────────────────────────────── */
+.queue-wrap {
+  margin: 40px 0;
+  border: 1px solid var(--line);
+  padding: 20px;
+}
+.queue-head {
+  display: flex; align-items: center; gap: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px dashed var(--line);
+  margin-bottom: 14px;
+}
+.queue-label {
+  font-size: 11px; letter-spacing: 2px; color: var(--accent);
+}
+.queue-count {
+  font-size: 11px; letter-spacing: 1px; color: var(--ink-dim);
+  margin-right: auto;
+}
+.queue { list-style: none; }
+.queue li {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 10px 4px;
+  font-size: 13px;
+  border-bottom: 1px solid var(--line);
+}
+.queue li:last-child { border-bottom: 0; }
+.queue .fname { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding-right: 16px; }
+.queue .fsize { color: var(--ink-dim); font-size: 11px; margin-right: 12px; }
+.queue .remove {
+  background: none; border: 0; color: var(--ink-dim); cursor: pointer;
+  font-family: "JetBrains Mono", monospace; font-size: 16px;
+  padding: 0 6px;
+}
+.queue .remove:hover { color: var(--accent); }
+
+.actions {
+  margin-top: 20px;
+  display: flex; align-items: center; gap: 18px;
+}
+.status {
+  font-size: 12px; letter-spacing: 1px; color: var(--ink-dim);
+}
+.status.ok { color: var(--accent-2); }
+.status.err { color: var(--accent); }
+
+/* ── How section ────────────────────────────────────────── */
+.how {
+  margin-top: 80px;
+  padding-top: 40px;
+  border-top: 1px solid var(--line);
+}
+.how h3 {
+  font-family: "Fraunces", serif;
+  font-weight: 900;
+  font-style: italic;
+  font-size: 28px;
+  margin-bottom: 22px;
+}
+.how ol {
+  list-style: none;
+  counter-reset: step;
+}
+.how li {
+  counter-increment: step;
+  padding: 14px 0 14px 60px;
+  position: relative;
+  font-size: 14px;
+  color: var(--ink-dim);
+  border-bottom: 1px solid var(--line);
+}
+.how li:last-child { border-bottom: 0; }
+.how li::before {
+  content: counter(step, decimal-leading-zero);
+  position: absolute; left: 0; top: 14px;
+  font-family: "Major Mono Display", monospace;
+  font-size: 18px;
+  color: var(--accent);
+}
+.how li b { color: var(--ink); font-weight: 600; }
+
+/* ── Footer ─────────────────────────────────────────────── */
+footer {
+  border-top: 1px solid var(--line);
+  padding: 22px 36px;
+  display: flex; justify-content: space-between;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  color: var(--ink-dim);
+  text-transform: uppercase;
+}
+
+/* ── Spinner ────────────────────────────────────────────── */
+.spinner {
+  display: inline-block;
+  width: 12px; height: 12px;
+  border: 2px solid var(--line);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Responsive ─────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .topbar { padding: 16px 20px; flex-direction: column; gap: 8px; align-items: flex-start; }
+  main { padding: 40px 20px; }
+  .drop { padding: 40px 20px; }
+  .specs { font-size: 10px; }
+  .specs .dot { margin: 0 4px; }
+  footer { padding: 18px 20px; flex-direction: column; gap: 6px; }
+}
